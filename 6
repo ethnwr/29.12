@@ -1,0 +1,47 @@
+#include <iostream>
+
+int* insertIntoArray(int* originalArray, int originalSize, int newElements[], int newElementsSize, int insertIndex) {
+    if (insertIndex < 0 || insertIndex > originalSize) {
+        std::cerr << "Error: Invalid insert index." << std::endl;
+        return originalArray;
+    }
+
+    int newSize = originalSize + newElementsSize;
+    int* newArray = new int[newSize];
+
+    
+    for (int i = 0; i < insertIndex; ++i) {
+        newArray[i] = originalArray[i];
+    }
+
+    
+    for (int i = 0; i < newElementsSize; ++i) {
+        newArray[insertIndex + i] = newElements[i];
+    }
+
+    
+    for (int i = insertIndex; i < originalSize; ++i) {
+        newArray[insertIndex + newElementsSize + (i - insertIndex)] = originalArray[i];
+    }
+
+    return newArray;
+}
+
+int main() {
+    int originalArray[] = {1, 2, 3, 4, 5};
+    int originalSize = sizeof(originalArray) / sizeof(originalArray[0]);
+    int newElements[] = {6, 7, 8};
+    int newElementsSize = sizeof(newElements) / sizeof(newElements[0]);
+    int insertIndex = 2;
+
+    int* combinedArray = insertIntoArray(originalArray, originalSize, newElements, newElementsSize, insertIndex);
+
+    for (int i = 0; i < originalSize + newElementsSize; ++i) {
+        std::cout << combinedArray[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] combinedArray;
+
+    return 0;
+}
