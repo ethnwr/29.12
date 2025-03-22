@@ -1,0 +1,37 @@
+#include <iostream>
+
+int* appendToArray(int* originalArray, int originalSize, int* newElements, int newElementsSize) {
+    int newSize = originalSize + newElementsSize;
+    int* newArray = new int[newSize];
+
+    
+    for (int i = 0; i < originalSize; ++i) {
+        newArray[i] = originalArray[i];
+    }
+
+    
+    for (int i = 0; i < newElementsSize; ++i) {
+        newArray[originalSize + i] = newElements[i];
+    }
+
+    return newArray;
+}
+
+int main() {
+    int originalArray[] = {1, 2, 3};
+    int originalSize = sizeof(originalArray) / sizeof(originalArray[0]);
+
+    int newElements[] = {4, 5, 6};
+    int newElementsSize = sizeof(newElements) / sizeof(newElements[0]);
+
+    int* combinedArray = appendToArray(originalArray, originalSize, newElements, newElementsSize);
+
+    for (int i = 0; i < originalSize + newElementsSize; ++i) {
+        std::cout << combinedArray[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] combinedArray;
+
+    return 0;
+}
