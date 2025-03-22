@@ -1,0 +1,56 @@
+#include <iostream>
+
+int* removeFromArray(int* originalArray, int originalSize, int startIndex, int count) {
+    if (startIndex < 0 || startIndex >= originalSize || count < 0) {
+        std::cerr << "Error: Invalid parameters." << std::endl;
+        return originalArray; 
+    }
+
+    int elementsToRemove = (startIndex + count > originalSize) ? originalSize - startIndex : count;
+    int newSize = originalSize - elementsToRemove;
+
+    if (newSize <= 0) {
+        delete[] originalArray;
+        return nullptr; 
+    }
+
+    int* newArray = new int[newSize];
+    int newIndex = 0;
+
+    
+    for (int i = 0; i < startIndex; ++i) {
+        newArray[newIndex++] = originalArray[i];
+    }
+
+    
+
+    
+    for (int i = startIndex + elementsToRemove; i < originalSize; ++i) {
+        newArray[newIndex++] = originalArray[i];
+    }
+
+    return newArray;
+}
+
+int main() {
+    int originalArray[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int originalSize = sizeof(originalArray) / sizeof(originalArray[0]);
+    int startIndex = 3;
+    int count = 3;
+
+    int* newArray = removeFromArray(originalArray, originalSize, startIndex, count);
+
+    /
+    if (newArray != nullptr) {
+        for (int i = 0; i < originalSize - ((startIndex + count > originalSize) ? originalSize - startIndex : count); ++i) {
+            std::cout << newArray[i] << " ";
+        }
+        std::cout << std::endl;
+    } else {
+        std::cout << "Массив пуст после удаления." << std::endl;
+    }
+
+    delete[] newArray; 
+
+    return 0;
+}
